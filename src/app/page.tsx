@@ -1,5 +1,6 @@
 import { ProjectList } from "@/components/project-list";
 import { BlueprintBackground } from "@/components/blueprint-background";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   return (
@@ -7,9 +8,13 @@ export default function Home() {
       <BlueprintBackground />
       <main className="mx-auto w-full max-w-4xl flex flex-col gap-10">
         <header className="flex flex-col gap-2">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Yan Gurevich</h1>
-          <a href="mailto:yan@vikng.dev" className="text-sm text-muted-foreground hover:underline">yan@vikng.dev</a>
-          <p className="text-base sm:text-lg text-foreground/80">true fullstack engineer — idea → deployment → scale</p>
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Yan Gurevich</h1>
+            <ThemeToggle />
+          </div>
+          <a href="mailto:yan@vikng.dev" className="text-sm text-muted-foreground hover:underline ">yan@vikng.dev</a>
+          <p className="text-base sm:text-lg text-foreground/80">true fullstack engineer</p>
+          <p className="text-base sm:text-lg text-foreground/80">idea → deployment → scale</p>
         </header>
 
         <section className="flex flex-col gap-5">

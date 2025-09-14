@@ -5,7 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 import { Badge } from "@/components/ui/badge";
 import { useInView } from "@/hooks/use-in-view";
-import { Shield, Brain, Cloud, Database, Gamepad2, Wallet, Boxes } from "lucide-react";
+import { Shield, Gamepad2, Wallet, Boxes } from "lucide-react";
 
 export type Project = {
   title: string;
@@ -30,7 +30,8 @@ const projects: Project[] = [
       "AI agent platform for configurable trade simulation",
     ],
     tech: ["React", "AWS", "Lambda", "Web3", "AI"],
-    icon: <Wallet className="h-4 w-4" />,
+    imageSrc: "/projects/grix.png",
+    icon: <Boxes className="h-4 w-4" />,
   },
   {
     title: "threatlight.com",
@@ -43,6 +44,7 @@ const projects: Project[] = [
       "built on GCP with Docker, VMs, Terraform",
     ],
     tech: ["GCP", "Docker", "VMs", "Terraform", "Security"],
+    imageSrc: "/projects/threatlight.png",
     icon: <Shield className="h-4 w-4" />,
   },
   {
@@ -54,6 +56,7 @@ const projects: Project[] = [
       "mobile performance & feel tuned by hand",
     ],
     tech: ["Godot", "GDScript", "Android"],
+    imageSrc: "/projects/ironfront.png",
     icon: <Gamepad2 className="h-4 w-4" />,
   },
   {
@@ -66,16 +69,17 @@ const projects: Project[] = [
       "focused UX for travelers",
     ],
     tech: ["Next.js", "Firebase", "Firestore", "AI"],
-    icon: <Boxes className="h-4 w-4" />,
+    imageSrc: "/projects/driftlog.png",
+    icon: <Wallet className="h-4 w-4" />,
   },
 ];
 
 function ProjectItem({ project }: { project: Project }) {
-  const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.25 });
+  const { ref, inView } = useInView<HTMLLIElement>({ threshold: 0.25 });
 
   return (
     <li ref={ref} className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_3fr] sm:gap-8">
-      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border bg-muted">
+      <div className="relative aspect-[203/132] w-full overflow-hidden rounded-lg border bg-muted">
         {project.imageSrc ? (
           <Image src={project.imageSrc} alt={project.imageAlt || project.title} fill className="object-cover" />
         ) : (

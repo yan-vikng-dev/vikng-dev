@@ -15,7 +15,7 @@ export function ProjectCard({ title, href, description, tech = [], imageSrc, ima
   return (
     <article className="overflow-hidden rounded-lg border bg-card text-card-foreground">
       <Link href={href} target="_blank" rel="noreferrer" className="block">
-        <div className="relative aspect-[16/9] w-full bg-muted">
+        <div className="relative aspect-[203/132] w-full bg-muted">
           {imageSrc ? (
             <Image src={imageSrc} alt={imageAlt || title} fill className="object-cover" />
           ) : (
