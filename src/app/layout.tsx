@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yan Gurevich — Full‑Stack Engineer",
+  title: "Yan Gurevich, Full‑Stack Engineer",
   description: "True full‑stack engineer. I ship end‑to‑end: idea → deployment → scale.",
 };
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
