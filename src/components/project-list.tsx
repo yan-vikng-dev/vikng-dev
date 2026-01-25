@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import { useTheme } from "next-themes";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useInView } from "@/hooks/use-in-view";
@@ -14,32 +13,29 @@ type ProjectItemProps = {
   priority: boolean;
   expanded: boolean;
   onToggle: () => void;
+  index: number;
 };
 
-function ProjectItem({ project, priority, expanded, onToggle }: ProjectItemProps) {
-  const { resolvedTheme } = useTheme();
+function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectItemProps) {
   const { ref, inView } = useInView<HTMLLIElement>({ threshold: 0.25 });
-  const [mounted, setMounted] = React.useState(false);
   const [toggleLabel, setToggleLabel] = React.useState("more");
   const [togglePhase, setTogglePhase] = React.useState<"idle" | "erasing" | "typing">("idle");
   const firstToggleRender = React.useRef(true);
 
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const theme = mounted ? (resolvedTheme ?? "light") : "light";
-  const themedImages = React.useMemo(() => {
-    const exact = project.images.filter((image) => image.theme === theme);
-    const any = project.images.filter((image) => image.theme === "any");
-    if (exact.length > 0) {
-      return exact.concat(any);
-    }
-    return any.length > 0 ? any : project.images;
-  }, [project.images, theme]);
-
-  const active = themedImages[0];
+  const anyImage = React.useMemo(
+    () => project.images.find((image) => image.theme === "any"),
+    [project.images]
+  );
+  const lightImage = React.useMemo(
+    () => project.images.find((image) => image.theme === "light"),
+    [project.images]
+  );
+  const darkImage = React.useMemo(
+    () => project.images.find((image) => image.theme === "dark"),
+    [project.images]
+  );
   const expandedId = `${project.title}-details`;
+  const staggerDelay = `${index * 80}ms`;
 
   React.useEffect(() => {
     const nextLabel = expanded ? "less" : "more";
@@ -100,25 +96,45 @@ function ProjectItem({ project, priority, expanded, onToggle }: ProjectItemProps
   return (
     <li ref={ref} className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_3fr] sm:gap-8">
       <div className="relative aspect-[203/132] w-full overflow-hidden rounded-sm border bg-muted">
-        {active ? (
+        {anyImage ? (
           <Image
-            src={active.src}
-            alt={active.alt}
+            src={anyImage.src}
+            alt={anyImage.alt}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
             priority={priority}
             className="object-cover transition-opacity duration-300"
           />
+        ) : lightImage && darkImage ? (
+          <>
+            <Image
+              src={lightImage.src}
+              alt={lightImage.alt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+              priority={priority}
+              className="object-cover transition-opacity duration-300 block dark:hidden"
+            />
+            <Image
+              src={darkImage.src}
+              alt={darkImage.alt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+              priority={priority}
+              className="object-cover transition-opacity duration-300 hidden dark:block"
+            />
+          </>
         ) : (
-        <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
-          image coming soon
-        </div>
+          <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
+            image coming soon
+          </div>
         )}
       </div>
 
       <div
         data-in-view={inView}
         className="flex flex-col gap-2 h-full opacity-0 translate-y-4 transition-[opacity,transform] duration-500 data-[in-view=true]:opacity-100 data-[in-view=true]:translate-y-0"
+        style={{ transitionDelay: inView ? staggerDelay : "0ms" }}
       >
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
@@ -226,6 +242,7 @@ export function ProjectList() {
           priority={i === 0}
           expanded={openProject === p.title}
           onToggle={() => setOpenProject((current) => (current === p.title ? null : p.title))}
+          index={i}
         />)
       )}
     </ul>
