@@ -9,11 +9,17 @@ import { Badge } from "@/components/ui/badge";
 import { useInView } from "@/hooks/use-in-view";
 import { projects, type Project } from "@/data/projects";
 
-function ProjectItem({ project, priority }: { project: Project; priority: boolean }) {
+type ProjectItemProps = {
+  project: Project;
+  priority: boolean;
+  expanded: boolean;
+  onToggle: () => void;
+};
+
+function ProjectItem({ project, priority, expanded, onToggle }: ProjectItemProps) {
   const { resolvedTheme } = useTheme();
   const { ref, inView } = useInView<HTMLLIElement>({ threshold: 0.25 });
   const [mounted, setMounted] = React.useState(false);
-  const [expanded, setExpanded] = React.useState(false);
   const [toggleLabel, setToggleLabel] = React.useState("more");
   const [togglePhase, setTogglePhase] = React.useState<"idle" | "erasing" | "typing">("idle");
   const firstToggleRender = React.useRef(true);
@@ -144,7 +150,7 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
         <div className="mt-auto pt-2">
           <button
             type="button"
-            onClick={() => setExpanded((value) => !value)}
+            onClick={onToggle}
             className="inline-flex items-center text-lg font-medium text-foreground/80 hover:text-foreground"
             aria-expanded={expanded}
             aria-controls={expandedId}
@@ -209,10 +215,18 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
 }
 
 export function ProjectList() {
+  const [openProject, setOpenProject] = React.useState<string | null>(null);
+
   return (
     <ul className="flex flex-col gap-12">
       {projects.map((p, i) => (
-        <ProjectItem key={p.title} project={p} priority={i === 0} />)
+        <ProjectItem
+          key={p.title}
+          project={p}
+          priority={i === 0}
+          expanded={openProject === p.title}
+          onToggle={() => setOpenProject((current) => (current === p.title ? null : p.title))}
+        />)
       )}
     </ul>
   );

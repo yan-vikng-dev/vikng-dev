@@ -62,7 +62,9 @@ export default function Home() {
               <ThemeToggle />
             </div>
           </div>
-          <p className="text-lg text-foreground/80">true fullstack engineer</p>
+          <a href="#definition-1" className="text-lg text-foreground/80 hover:text-foreground">
+            true fullstack engineer<sup>1</sup>
+          </a>
           <p className="text-lg text-foreground/80">idea → deployment → scale</p>
         </header>
 
@@ -75,6 +77,13 @@ export default function Home() {
       <footer className="row-start-2 mt-12 text-sm text-muted-foreground">
         <div className="mx-auto w-full max-w-4xl flex items-center justify-between">
           <span>© {CURRENT_YEAR} vikng.dev</span>
+        </div>
+        <div id="definition-1" className="mx-auto mt-4 w-full max-w-4xl text-sm text-muted-foreground">
+          <span className="font-semibold text-foreground">
+            true fullstack engineer<sup>1</sup>
+          </span>{" "}
+          Full‑stack alone understates the responsibility a developer may assume. Coupled with softer skills, it becomes
+          the capacity to meet any challenge.
         </div>
       </footer>
     </div>
