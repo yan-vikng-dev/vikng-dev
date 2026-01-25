@@ -29,7 +29,7 @@ export function ProjectCard({ title, href, description, tech = [], imageSrc, ima
       <div className="p-4 sm:p-5">
         <div className="flex items-start justify-between gap-2">
           <Link href={href} target="_blank" rel="noreferrer" className="hover:underline">
-            <h3 className="text-base sm:text-lg font-medium tracking-tight">{title}</h3>
+            <h3 className="text-lg font-medium tracking-tight">{title}</h3>
           </Link>
         </div>
         <p className="mt-1 text-sm text-foreground/80">{description}</p>

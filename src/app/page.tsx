@@ -13,7 +13,7 @@ export default function Home() {
       <main className="mx-auto w-full max-w-4xl flex flex-col gap-10">
         <header className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Yan Gurevich</h1>
+            <h1 className="text-4xl font-semibold tracking-tight">Yan Gurevich</h1>
             <div className="flex items-center gap-2">
               <a
                 href="mailto:yan@vikng.dev"
@@ -62,17 +62,17 @@ export default function Home() {
               <ThemeToggle />
             </div>
           </div>
-          <p className="text-base sm:text-lg text-foreground/80">true fullstack engineer</p>
-          <p className="text-base sm:text-lg text-foreground/80">idea → deployment → scale</p>
+          <p className="text-lg text-foreground/80">true fullstack engineer</p>
+          <p className="text-lg text-foreground/80">idea → deployment → scale</p>
         </header>
 
         <section className="flex flex-col gap-5">
-          <h2 className="text-sm uppercase tracking-wider text-muted-foreground">Projects</h2>
+          <h2 className="text-lg uppercase tracking-wider text-foreground font-semibold">Projects</h2>
           <ProjectList />
         </section>
       </main>
 
-      <footer className="row-start-2 mt-12 text-xs text-muted-foreground">
+      <footer className="row-start-2 mt-12 text-sm text-muted-foreground">
         <div className="mx-auto w-full max-w-4xl flex items-center justify-between">
           <span>© {CURRENT_YEAR} vikng.dev</span>
         </div>

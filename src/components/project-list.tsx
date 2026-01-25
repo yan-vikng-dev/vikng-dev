@@ -63,20 +63,20 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
           <span className="grid place-items-center size-5 text-current">
             {item.icon}
           </span>
-          <span className="text-xs font-medium text-current">{item.label}</span>
+          <span className="text-sm font-medium text-current">{item.label}</span>
         </div>
       ))}
     </div>
   );
   const techMarqueeList = (items: Project["allTechnologies"]) => (
-    <div className="mt-2 tech-marquee">
+    <div className="mt-2 mb-4 tech-marquee">
       <div className="tech-marquee-track" aria-label="All technologies">
         {items.map((item) => (
           <div key={`primary-${item.label}`} className="inline-flex items-center gap-1 rounded-md border bg-background px-2 h-8 transition-colors hover:bg-foreground hover:text-background hover:border-foreground" aria-label={item.label}>
             <span className="grid place-items-center size-5 text-current">
               {item.icon}
             </span>
-            <span className="text-xs font-medium text-current">{item.label}</span>
+            <span className="text-sm font-medium text-current">{item.label}</span>
           </div>
         ))}
         {items.map((item) => (
@@ -84,7 +84,7 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
             <span className="grid place-items-center size-5 text-current">
               {item.icon}
             </span>
-            <span className="text-xs font-medium text-current">{item.label}</span>
+            <span className="text-sm font-medium text-current">{item.label}</span>
           </div>
         ))}
       </div>
@@ -104,9 +104,9 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
             className="object-cover transition-opacity duration-300"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
-            image coming soon
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">
+          image coming soon
+        </div>
         )}
       </div>
 
@@ -118,13 +118,13 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
           <div className="flex items-center gap-2">
             {project.icon}
             {project.href ? (
-              <Link href={project.href} target="_blank" rel="noreferrer" className="text-base sm:text-lg font-medium hover:underline">
-                {project.title}
-              </Link>
-            ) : (
-              <h3 className="text-base sm:text-lg font-medium">{project.title}</h3>
-            )}
-          </div>
+            <Link href={project.href} target="_blank" rel="noreferrer" className="text-lg font-medium hover:underline">
+              {project.title}
+            </Link>
+          ) : (
+            <h3 className="text-lg font-medium">{project.title}</h3>
+          )}
+        </div>
           <div>
             <Badge
               className={
@@ -136,7 +136,7 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
               {project.status}
             </Badge>
           </div>
-          <p className="text-sm text-foreground/80">{project.description}</p>
+        <p className="text-sm text-foreground/80">{project.description}</p>
 
           {techChipList(project.techHighlights)}
         </div>
@@ -145,11 +145,11 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
           <button
             type="button"
             onClick={() => setExpanded((value) => !value)}
-            className="inline-flex items-center text-xs font-medium text-foreground/80 hover:text-foreground"
+            className="inline-flex items-center text-lg font-medium text-foreground/80 hover:text-foreground"
             aria-expanded={expanded}
             aria-controls={expandedId}
           >
-            <ChevronDown className={expanded ? "mr-1 size-3 transition-transform duration-300 rotate-180" : "mr-1 size-3 transition-transform duration-300"} />
+            <ChevronDown className={expanded ? "mr-2 size-4 transition-transform duration-300 rotate-180" : "mr-2 size-4 transition-transform duration-300"} />
             <span>See&nbsp;</span>
             <span
               className={
@@ -177,23 +177,23 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
         }
       >
         <div className="overflow-hidden">
-          <div className="space-y-4 pt-4">
+          <div className="space-y-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">All technologies</p>
+              <p className="text-sm uppercase tracking-wide text-foreground font-semibold">All technologies</p>
               {techMarqueeList(project.allTechnologies)}
             </div>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
               <div className="flex-1">
-                <p className="text-xs uppercase tracking-wide text-muted-foreground">Roles & responsibilities</p>
+                <p className="text-sm uppercase tracking-wide text-foreground font-semibold">Roles & responsibilities</p>
                 <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
                   {project.roles.map((role) => (
                     <li key={role}>{role}</li>
                   ))}
                 </ul>
               </div>
-              <div className="hidden sm:block w-px self-stretch bg-border" />
+              <div className="hidden sm:block w-px self-stretch bg-foreground/30" />
               <div className="flex-1">
-                <p className="text-xs uppercase tracking-wide text-muted-foreground">Major achievements</p>
+                <p className="text-sm uppercase tracking-wide text-foreground font-semibold">Major achievements</p>
                 <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
                   {project.achievements.map((achievement) => (
                     <li key={achievement}>{achievement}</li>
