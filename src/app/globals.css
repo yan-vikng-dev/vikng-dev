@@ -189,3 +189,40 @@
     letter-spacing: var(--tracking-normal);
   }
 }
+
+@keyframes typing-erase {
+  from {
+    max-width: calc(var(--typing-chars) * 1ch);
+  }
+  to {
+    max-width: 0;
+  }
+}
+
+@keyframes typing-type {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: calc(var(--typing-chars) * 1ch);
+  }
+}
+
+.typing-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+}
+
+.typing-erase {
+  animation: typing-erase 0.2s steps(var(--typing-chars), end) forwards;
+}
+
+.typing-type {
+  animation: typing-type 0.24s steps(var(--typing-chars), end) forwards;
+}
+
+.typing-idle {
+  max-width: calc(var(--typing-chars) * 1ch);
+}
