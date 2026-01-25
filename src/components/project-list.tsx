@@ -101,7 +101,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
             src={anyImage.src}
             alt={anyImage.alt}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 550px"
             priority={priority}
             className="object-cover transition-opacity duration-300"
           />
@@ -111,7 +111,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
               src={lightImage.src}
               alt={lightImage.alt}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 550px"
               priority={priority}
               className="object-cover transition-opacity duration-300 block dark:hidden"
             />
@@ -119,7 +119,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
               src={darkImage.src}
               alt={darkImage.alt}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 40vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 70vw, 550px"
               priority={priority}
               className="object-cover transition-opacity duration-300 hidden dark:block"
             />
