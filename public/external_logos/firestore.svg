@@ -1,0 +1,11 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+  <title>Layer 1</title>
+  <g id="svg_7" transform="translate(-7.75 6.3125) translate(7.6875 -6.5) matrix(1.70892 0 0 1.70446 -8.47825 -8.54802)">
+   <path d="m12.01,5.23l-6.22,2.82l0,2.78l6.22,-2.82l6.22,2.82l0,-2.78l-6.22,-2.82z" id="svg_1"/>
+   <path d="m12.01,10.06l-6.22,2.82l0,2.78l6.22,-2.82l6.22,2.82l0,-2.78l-6.22,-2.82z" id="svg_2"/>
+   <path d="m17.42,16.6l-3.06,-1.39l-2.35,1.07l0,2.77l5.41,-2.45z" id="svg_3"/>
+   <rect height="0" id="svg_5" opacity="0.5" width="0" x="2.91" y="10.78"/>
+  </g>
+ </g>
+</svg>
