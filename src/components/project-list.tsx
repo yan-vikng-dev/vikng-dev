@@ -53,7 +53,7 @@ const projects: Project[] = [
   {
     title: "flowcost.co",
     href: "https://flowcost.co",
-    description: "Expense tracker for digital nomads",
+    description: "Expense Tracker for Digital Nomads",
     status: "in production",
     tech: ["Tanstack Start", "CloudFlare", "WhatsApp Business"],
     skills: ["WhatsApp AI Assistant", "Budgeting and Finance"],
@@ -63,7 +63,7 @@ const projects: Project[] = [
   },
   {
     title: "ironfront",
-    description: "android tank game — passion project",
+    description: "Android Tank Game",
     status: "in development",
     tech: ["Godot", "Android"],
     skills: ["Gameplay and level design", "Android development"],
@@ -74,7 +74,7 @@ const projects: Project[] = [
   {
     title: "app.grix.finance",
     href: "https://app.grix.finance",
-    description: "web3 options aggregator for ethereum options protocols",
+    description: "Web3 Options Aggregator",
     status: "in production",
     tech: ["React", "AWS", "Lambda", "Web3"],
     skills: ["AI‑driven trade execution", "Options pricing algorithms"],
