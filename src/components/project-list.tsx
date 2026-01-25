@@ -43,7 +43,7 @@ const projects: Project[] = [
   {
     title: "threatlight.com",
     href: "https://threatlight.com",
-    description: "complete security system: detection → response",
+    description: "Targeted Detection and Response",
     status: "in production",
     tech: ["GCP", "Docker", "Terraform"],
     skills: ["Security environment", "VM orchestration"],
