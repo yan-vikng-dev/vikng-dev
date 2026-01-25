@@ -3,6 +3,7 @@ import { Shield, Gamepad2, Wallet, Boxes } from "lucide-react";
 import {
   SiReact,
   SiAmazon,
+  SiAmazonapigateway,
   SiAwslambda,
   SiGooglecloud,
   SiDocker,
@@ -11,8 +12,18 @@ import {
   SiAndroid,
   SiEthereum,
   SiCloudflare,
+  SiGithubactions,
+  SiGoogleads,
+  SiPosthog,
+  SiSolidity,
+  SiNextdotjs,
   SiWhatsapp,
+  SiPython,
+  SiTypescript,
+  SiGoogleplay,
+  SiAudacity,
 } from "react-icons/si";
+import { FiActivity, FiLayers, FiTrendingUp, FiVolume2 } from "react-icons/fi";
 import { TanstackIcon } from "@/components/icons/tanstack-icon";
 
 type ProjectImage = {
@@ -25,6 +36,30 @@ type TechItem = {
   label: string;
   icon: ReactNode;
 };
+
+type MonoSvgIconProps = {
+  src: string;
+  label: string;
+};
+
+const MonoSvgIcon = ({ src, label }: MonoSvgIconProps) => (
+  <span
+    className="inline-flex size-5 text-current"
+    role="img"
+    aria-label={label}
+    style={{
+      WebkitMaskImage: `url(${src})`,
+      maskImage: `url(${src})`,
+      WebkitMaskRepeat: "no-repeat",
+      maskRepeat: "no-repeat",
+      WebkitMaskSize: "contain",
+      maskSize: "contain",
+      WebkitMaskPosition: "center",
+      maskPosition: "center",
+      backgroundColor: "currentColor",
+    }}
+  />
+);
 
 export type Project = {
   title: string;
@@ -54,17 +89,19 @@ export const projects: Project[] = [
       { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
       { label: "Docker", icon: <SiDocker className="size-5" /> },
       { label: "Terraform", icon: <SiTerraform className="size-5" /> },
-      { label: "Compute Engine", icon: <span className="text-[10px] leading-none">C</span> },
-      { label: "VPC", icon: <span className="text-[10px] leading-none">V</span> },
-      { label: "IAM", icon: <span className="text-[10px] leading-none">I</span> },
-      { label: "Monitoring", icon: <span className="text-[10px] leading-none">M</span> },
-      { label: "Logging", icon: <span className="text-[10px] leading-none">L</span> },
+      { label: "Next.js", icon: <SiNextdotjs className="size-5" /> },
+      { label: "Compute Engine", icon: <MonoSvgIcon src="/external_logos/gcp-compute-engine.svg" label="Compute Engine" /> },
+      { label: "Monitoring", icon: <MonoSvgIcon src="/external_logos/gcp-monitoring.svg" label="Monitoring" /> },
+      { label: "DNS", icon: <SiCloudflare className="size-5" /> },
+      { label: "CI/CD", icon: <SiGithubactions className="size-5" /> },
+      { label: "Python", icon: <SiPython className="size-5" /> },
+      { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
     ],
-    roles: ["Security architecture", "Detection rule tuning", "Infrastructure-as-code", "Deployment automation"],
+    roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
     achievements: [
-      "Built repeatable cloud security environments with automated provisioning",
-      "Improved signal coverage for targeted threat scenarios",
-      "Hardened access controls across critical services",
+      "Developed web app from start to finish",
+      "Integrated web app with existing security tools",
+      "Created proper CI/CD flow",
     ],
     images: [
       { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
@@ -81,24 +118,27 @@ export const projects: Project[] = [
     description: "Expense Tracker for Digital Nomads",
     status: "in production",
     techHighlights: [
-      { label: "Tanstack Start", icon: <TanstackIcon className="size-5" /> },
       { label: "CloudFlare", icon: <SiCloudflare className="size-5" /> },
       { label: "WhatsApp Business", icon: <SiWhatsapp className="size-4" /> },
+      { label: "Google Ads", icon: <SiGoogleads className="size-5" /> },
     ],
     allTechnologies: [
-      { label: "Tanstack Start", icon: <TanstackIcon className="size-5" /> },
-      { label: "CloudFlare", icon: <SiCloudflare className="size-5" /> },
+      { label: "PostHog", icon: <SiPosthog className="size-5" /> },
       { label: "WhatsApp Business", icon: <SiWhatsapp className="size-4" /> },
-      { label: "TypeScript", icon: <span className="text-[10px] leading-none">TS</span> },
-      { label: "Webhooks", icon: <span className="text-[10px] leading-none">W</span> },
-      { label: "REST APIs", icon: <span className="text-[10px] leading-none">R</span> },
-      { label: "Analytics", icon: <span className="text-[10px] leading-none">A</span> },
+      { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
+      { label: "CloudFlare", icon: <SiCloudflare className="size-5" /> },
+      { label: "Tanstack Start", icon: <TanstackIcon className="size-5" /> },
+      { label: "Google Ads", icon: <SiGoogleads className="size-5" /> },
     ],
-    roles: ["Full-stack product development", "Messaging automation", "Spending insights and categorization"],
+    roles: [
+      "End to end development",
+      "Landing page with SSR",
+      "Develop web application",
+      "Develop WhatsApp AI assistant",
+    ],
     achievements: [
-      "Shipped a WhatsApp-first UX for fast expense capture",
-      "Automated expense parsing and tagging from chat inputs",
-      "Designed multi-currency budgeting views for travelers",
+      "Ship solo project with advertisement",
+      "Fully functional AI assistant with tool capabilities",
     ],
     images: [
       { src: "/projects/flowcost-light.png", alt: "Flowcost light theme interface", theme: "light" },
@@ -121,18 +161,16 @@ export const projects: Project[] = [
     ],
     allTechnologies: [
       { label: "Godot", icon: <SiGodotengine className="size-5" /> },
-      { label: "GDScript", icon: <span className="text-[10px] leading-none">G</span> },
+      { label: "GDScript", icon: <SiGodotengine className="size-5" /> },
       { label: "Android", icon: <SiAndroid className="size-5" /> },
-      { label: "2D physics", icon: <span className="text-[10px] leading-none">2D</span> },
-      { label: "Input handling", icon: <span className="text-[10px] leading-none">I</span> },
-      { label: "Level tooling", icon: <span className="text-[10px] leading-none">L</span> },
+      { label: "Google Play", icon: <SiGoogleplay className="size-5" /> },
+      { label: "2D physics", icon: <FiActivity className="size-5" /> },
+      { label: "Audio design", icon: <FiVolume2 className="size-5" /> },
+      { label: "Audacity", icon: <SiAudacity className="size-5" /> },
+      { label: "Aseprite", icon: <MonoSvgIcon src="/external_logos/aseprite.svg" label="Aseprite" /> },
     ],
-    roles: ["Gameplay programming", "Level design", "Mobile performance tuning"],
-    achievements: [
-      "Prototyped core combat loop and controls",
-      "Built modular levels for rapid iteration",
-      "Optimized gameplay for mid-range Android devices",
-    ],
+    roles: ["End to end development", "Mobile Play Store release", "Hand crafted pixel art"],
+    achievements: ["Realistic physics and body interactions", "Created custom, adaptive audio "],
     images: [
       { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
       { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
@@ -151,24 +189,23 @@ export const projects: Project[] = [
     techHighlights: [
       { label: "React", icon: <SiReact className="size-5" /> },
       { label: "AWS", icon: <SiAmazon className="size-5" /> },
-      { label: "Lambda", icon: <SiAwslambda className="size-5" /> },
       { label: "Web3", icon: <SiEthereum className="size-5" /> },
     ],
     allTechnologies: [
       { label: "React", icon: <SiReact className="size-5" /> },
       { label: "AWS", icon: <SiAmazon className="size-5" /> },
       { label: "Lambda", icon: <SiAwslambda className="size-5" /> },
-      { label: "API Gateway", icon: <span className="text-[10px] leading-none">AP</span> },
-      { label: "TypeScript", icon: <span className="text-[10px] leading-none">TS</span> },
+      { label: "API Gateway", icon: <SiAmazonapigateway className="size-5" /> },
+      { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
       { label: "Web3", icon: <SiEthereum className="size-5" /> },
-      { label: "Smart contracts", icon: <span className="text-[10px] leading-none">SC</span> },
-      { label: "Options analytics", icon: <span className="text-[10px] leading-none">OA</span> },
+      { label: "Smart contracts", icon: <SiSolidity className="size-5" /> },
+      { label: "Options analytics", icon: <FiTrendingUp className="size-5" /> },
     ],
-    roles: ["Frontend architecture", "Trading workflow automation", "Backend integrations"],
+    roles: ["AI trade bot design", "REST API development", "Web UI development"],
     achievements: [
-      "Unified multi-venue quotes into a single trading UI",
-      "Built options analytics surfaces for decision support",
-      "Automated trade execution flows with guardrails",
+      "Reduced app load times by up to 80%",
+      "Reduced AWS bill by 30%",
+      "Created customizable trade bots",
     ],
     images: [
       { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },

@@ -59,13 +59,35 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
   const techChipList = (items: Project["techHighlights"]) => (
     <div className="mt-2 flex flex-wrap items-center gap-2">
       {items.map((item) => (
-        <div key={item.label} className="inline-flex items-center gap-1 rounded-md border bg-background px-2 h-8" title={item.label} aria-label={item.label}>
-          <span className="grid place-items-center size-5">
+        <div key={item.label} className="inline-flex items-center gap-1 rounded-md border bg-background px-2 h-8 transition-colors hover:bg-foreground hover:text-background hover:border-foreground" aria-label={item.label}>
+          <span className="grid place-items-center size-5 text-current">
             {item.icon}
           </span>
-          <span className="text-xs font-medium text-foreground/80">{item.label}</span>
+          <span className="text-xs font-medium text-current">{item.label}</span>
         </div>
       ))}
+    </div>
+  );
+  const techMarqueeList = (items: Project["allTechnologies"]) => (
+    <div className="mt-2 tech-marquee">
+      <div className="tech-marquee-track" aria-label="All technologies">
+        {items.map((item) => (
+          <div key={`primary-${item.label}`} className="inline-flex items-center gap-1 rounded-md border bg-background px-2 h-8 transition-colors hover:bg-foreground hover:text-background hover:border-foreground" aria-label={item.label}>
+            <span className="grid place-items-center size-5 text-current">
+              {item.icon}
+            </span>
+            <span className="text-xs font-medium text-current">{item.label}</span>
+          </div>
+        ))}
+        {items.map((item) => (
+          <div key={`dupe-${item.label}`} className="inline-flex items-center gap-1 rounded-md border bg-background px-2 h-8 transition-colors hover:bg-foreground hover:text-background hover:border-foreground" aria-hidden="true">
+            <span className="grid place-items-center size-5 text-current">
+              {item.icon}
+            </span>
+            <span className="text-xs font-medium text-current">{item.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 
@@ -155,26 +177,29 @@ function ProjectItem({ project, priority }: { project: Project; priority: boolea
         }
       >
         <div className="overflow-hidden">
-          <div className="space-y-3 pt-4">
+          <div className="space-y-4 pt-4">
             <div>
               <p className="text-xs uppercase tracking-wide text-muted-foreground">All technologies</p>
-              {techChipList(project.allTechnologies)}
+              {techMarqueeList(project.allTechnologies)}
             </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Roles & responsibilities</p>
-              <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
-                {project.roles.map((role) => (
-                  <li key={role}>{role}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">Major achievements</p>
-              <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
-                {project.achievements.map((achievement) => (
-                  <li key={achievement}>{achievement}</li>
-                ))}
-              </ul>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Roles & responsibilities</p>
+                <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
+                  {project.roles.map((role) => (
+                    <li key={role}>{role}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="hidden sm:block w-px self-stretch bg-border" />
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Major achievements</p>
+                <ul className="mt-1 list-disc pl-4 text-sm text-foreground/80 space-y-1">
+                  {project.achievements.map((achievement) => (
+                    <li key={achievement}>{achievement}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>
