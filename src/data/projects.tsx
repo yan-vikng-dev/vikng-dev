@@ -23,8 +23,11 @@ import {
   SiGoogleplay,
   SiAudacity,
 } from "react-icons/si";
-import { FiActivity, FiLayers, FiTrendingUp, FiVolume2 } from "react-icons/fi";
+import { MacosIcon } from "@/components/icons/macos-icon";
+import { SwiftIcon } from "@/components/icons/swift-icon";
 import { TanstackIcon } from "@/components/icons/tanstack-icon";
+import { XcodeIcon } from "@/components/icons/xcode-icon";
+import { CloudflareWorkersIcon } from "@/components/icons/cloudflare-workers-icon";
 
 type ProjectImage = {
   src: string;
@@ -64,8 +67,11 @@ const MonoSvgIcon = ({ src, label }: MonoSvgIconProps) => (
 export type Project = {
   title: string;
   href: string | null;
+  opensourceHref?: string;
   description: string;
   status: "in production" | "in development";
+  imageFit?: "cover" | "contain";
+  imageFrameStyle?: "default" | "glass";
   techHighlights: TechItem[];
   allTechnologies: TechItem[];
   roles: string[];
@@ -115,6 +121,7 @@ export const projects: Project[] = [
   {
     title: "flowcost.co",
     href: "https://flowcost.co",
+    opensourceHref: "https://github.com/yan-vikng-dev/flowcost",
     description: "Expense Tracker for Digital Nomads",
     status: "in production",
     techHighlights: [
@@ -126,9 +133,9 @@ export const projects: Project[] = [
       { label: "PostHog", icon: <SiPosthog className="size-5" /> },
       { label: "WhatsApp Business", icon: <SiWhatsapp className="size-4" /> },
       { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
-      { label: "CloudFlare", icon: <SiCloudflare className="size-5" /> },
       { label: "Tanstack Start", icon: <TanstackIcon className="size-5" /> },
       { label: "Google Ads", icon: <SiGoogleads className="size-5" /> },
+      { label: "Cloudflare Workers", icon: <CloudflareWorkersIcon className="size-5" /> },
     ],
     roles: [
       "End to end development",
@@ -151,10 +158,32 @@ export const projects: Project[] = [
     icon: <Wallet className="size-4" />,
   },
   {
-    title: "ironfront",
+    title: "AutoQuit",
+    href: "https://github.com/yan-vikng-dev/AutoQuit",
+    opensourceHref: "https://github.com/yan-vikng-dev/autoquit",
+    description: "MacOS cleanup utility",
+    status: "in development",
+    imageFit: "contain",
+    imageFrameStyle: "glass",
+    techHighlights: [
+      { label: "Swift", icon: <SwiftIcon className="size-5" /> },
+      { label: "Xcode", icon: <XcodeIcon className="size-5" /> },
+      { label: "MacOS", icon: <MacosIcon className="size-5" /> },
+    ],
+    allTechnologies: [],
+    roles: [],
+    achievements: [],
+    images: [
+      { src: "/projects/autoquit.png", alt: "AutoQuit macOS app icon", theme: "any" },
+    ],
+    icon: <MacosIcon className="size-4" />,
+  },
+  {
+    title: "Ironfront",
     description: "Android Tank Game",
     status: "in development",
-    href: null,
+    href: "https://github.com/yan-vikng-dev/ironfront",
+    opensourceHref: "https://github.com/yan-vikng-dev/ironfront",
     techHighlights: [
       { label: "Godot", icon: <SiGodotengine className="size-5" /> },
       { label: "Android", icon: <SiAndroid className="size-5" /> },
@@ -164,10 +193,9 @@ export const projects: Project[] = [
       { label: "GDScript", icon: <SiGodotengine className="size-5" /> },
       { label: "Android", icon: <SiAndroid className="size-5" /> },
       { label: "Google Play", icon: <SiGoogleplay className="size-5" /> },
-      { label: "2D physics", icon: <FiActivity className="size-5" /> },
-      { label: "Audio design", icon: <FiVolume2 className="size-5" /> },
       { label: "Audacity", icon: <SiAudacity className="size-5" /> },
       { label: "Aseprite", icon: <MonoSvgIcon src="/external_logos/aseprite.svg" label="Aseprite" /> },
+      { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
     ],
     roles: ["End to end development", "Mobile Play Store release", "Hand crafted pixel art"],
     achievements: ["Realistic physics and body interactions", "Created custom, adaptive audio "],
@@ -199,7 +227,6 @@ export const projects: Project[] = [
       { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
       { label: "Web3", icon: <SiEthereum className="size-5" /> },
       { label: "Smart contracts", icon: <SiSolidity className="size-5" /> },
-      { label: "Options analytics", icon: <FiTrendingUp className="size-5" /> },
     ],
     roles: ["AI trade bot design", "REST API development", "Web UI development"],
     achievements: [
