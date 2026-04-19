@@ -82,7 +82,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "threatlight.com",
+    title: "Threatlight",
     href: "https://threatlight.com",
     description: "Targeted Detection and Response",
     status: "in production",
@@ -119,7 +119,7 @@ export const projects: Project[] = [
     icon: <Shield className="size-4" />,
   },
   {
-    title: "flowcost.co",
+    title: "Flowcost",
     href: "https://flowcost.co",
     opensourceHref: "https://github.com/yan-vikng-dev/flowcost",
     description: "Expense Tracker for Digital Nomads",
@@ -210,8 +210,8 @@ export const projects: Project[] = [
     icon: <Gamepad2 className="size-4" />,
   },
   {
-    title: "app.grix.finance",
-    href: "https://app.grix.finance",
+    title: "Grix Finance",
+    href: "https://grix.finance",
     description: "Web3 Options Aggregator",
     status: "in production",
     techHighlights: [
