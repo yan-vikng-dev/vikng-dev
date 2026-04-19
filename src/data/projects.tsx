@@ -105,9 +105,9 @@ export const projects: Project[] = [
     ],
     roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
     achievements: [
+      "Automated L1 Triage with AI",
       "Developed web app from start to finish",
       "Integrated web app with existing security tools",
-      "Created proper CI/CD flow",
     ],
     images: [
       { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
