@@ -105,7 +105,7 @@ export const projects: Project[] = [
     ],
     roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
     achievements: [
-      "Automated L1 Triage with AI",
+      "Automated L1 Triage with AI ",
       "Developed web app from start to finish",
       "Integrated web app with existing security tools",
     ],
@@ -144,8 +144,8 @@ export const projects: Project[] = [
       "Develop WhatsApp AI assistant",
     ],
     achievements: [
-      "Ship solo project with advertisement",
-      "Fully functional AI assistant with tool capabilities",
+      "Ship solo project with google ads campaign",
+      "Write-capable AI assistant in WhatsApp",
     ],
     images: [
       { src: "/projects/flowcost-light.png", alt: "Flowcost light theme interface", theme: "light" },
@@ -198,7 +198,7 @@ export const projects: Project[] = [
       { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
     ],
     roles: ["End to end development", "Mobile Play Store release", "Hand crafted pixel art"],
-    achievements: ["Realistic physics and body interactions", "Created custom, adaptive audio "],
+    achievements: ["Realistic physics and body interactions", "Created custom, adaptive audio"],
     images: [
       { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
       { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
