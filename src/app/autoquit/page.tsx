@@ -7,6 +7,8 @@ import { BlueprintBackground } from "@/components/blueprint-background";
 import { CopyCommandButton } from "@/components/copy-command-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+export const dynamic = "force-dynamic";
+
 const REPO_OWNER = "yan-vikng-dev";
 const REPO_NAME = "AutoQuit";
 const REPO = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
@@ -29,7 +31,7 @@ async function getLatestRelease(): Promise<ReleaseInfo> {
       `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`,
       {
         headers: { Accept: "application/vnd.github+json" },
-        next: { revalidate: 3600 },
+        cache: "no-store",
       },
     );
     if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
@@ -85,7 +87,7 @@ export default async function AutoQuitPage() {
               className="size-4 transition-transform group-hover:-translate-x-0.5"
               aria-hidden="true"
             />
-            <span>Yan Gurevich</span>
+            <span>vikng.dev</span>
           </Link>
           <ThemeToggle />
         </header>
