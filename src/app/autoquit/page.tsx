@@ -37,7 +37,14 @@ async function getLatestRelease(): Promise<ReleaseInfo> {
         cache: "no-store",
       },
     );
-    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+    if (!res.ok) {
+      const body = await res.text().catch(() => "<no body>");
+      const rateLimitRemaining = res.headers.get("x-ratelimit-remaining");
+      const rateLimitReset = res.headers.get("x-ratelimit-reset");
+      throw new Error(
+        `GitHub API returned ${res.status} (remaining=${rateLimitRemaining}, reset=${rateLimitReset}): ${body.slice(0, 300)}`,
+      );
+    }
     const data = (await res.json()) as GithubRelease;
     const version = data.tag_name?.replace(/^v/, "");
     const dmgUrl = data.assets?.find((a) => a.name?.endsWith(".dmg"))?.browser_download_url;
