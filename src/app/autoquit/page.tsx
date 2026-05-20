@@ -30,7 +30,10 @@ async function getLatestRelease(): Promise<ReleaseInfo> {
     const res = await fetch(
       `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`,
       {
-        headers: { Accept: "application/vnd.github+json" },
+        headers: {
+          Accept: "application/vnd.github+json",
+          "User-Agent": "vikng.dev",
+        },
         cache: "no-store",
       },
     );
