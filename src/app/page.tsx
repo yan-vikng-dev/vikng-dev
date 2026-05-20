@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ProjectList } from "@/components/project-list";
 import { BlueprintBackground } from "@/components/blueprint-background";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -6,7 +7,22 @@ import { MdEmail } from "react-icons/md";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-export default function Home() {
+// The site lists itself as a project; that card's preview embeds this very
+// page. `?d=` carries the recursion depth so the embed knows when to stop
+// (see MAX_MIRROR_DEPTH in project-list). Canonical keeps the ?d= variants
+// from being indexed as duplicates.
+export const metadata: Metadata = {
+  alternates: { canonical: "https://vikng.dev/" },
+};
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ d?: string }>;
+}) {
+  const { d } = await searchParams;
+  const depth = Math.max(Math.trunc(Number(d)) || 0, 0);
+
   return (
     <div className="font-sans min-h-screen grid grid-rows-[1fr_auto] p-8 sm:p-16">
       <BlueprintBackground />
@@ -70,7 +86,7 @@ export default function Home() {
 
         <section className="flex flex-col gap-5">
           <h2 className="text-lg uppercase tracking-wider text-foreground font-semibold">Projects</h2>
-          <ProjectList />
+          <ProjectList depth={depth} />
         </section>
       </main>
 

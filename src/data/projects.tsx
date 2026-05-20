@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Shield, Gamepad2, Wallet, Boxes } from "lucide-react";
+import { Shield, Gamepad2, Wallet, Boxes, InfinityIcon } from "lucide-react";
 import {
   SiReact,
   SiAmazon,
@@ -72,6 +72,7 @@ export type Project = {
   status: "in production" | "in development";
   imageFit?: "cover" | "contain";
   imageFrameStyle?: "default" | "glass";
+  selfPreview?: boolean;
   techHighlights: TechItem[];
   allTechnologies: TechItem[];
   roles: string[];
@@ -159,12 +160,11 @@ export const projects: Project[] = [
   },
   {
     title: "AutoQuit",
-    href: "https://github.com/yan-vikng-dev/AutoQuit",
-    opensourceHref: "https://github.com/yan-vikng-dev/autoquit",
+    href: "/autoquit",
+    opensourceHref: "https://github.com/yan-vikng-dev/AutoQuit",
     description: "MacOS cleanup utility",
-    status: "in development",
+    status: "in production",
     imageFit: "contain",
-    imageFrameStyle: "glass",
     techHighlights: [
       { label: "Swift", icon: <SwiftIcon className="size-5" /> },
       { label: "Xcode", icon: <XcodeIcon className="size-5" /> },
@@ -242,5 +242,22 @@ export const projects: Project[] = [
       { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
     ],
     icon: <Boxes className="size-4" />,
+  },
+  {
+    title: "vikng.dev",
+    href: "/",
+    description: "this",
+    status: "in production",
+    selfPreview: true,
+    techHighlights: [
+      { label: "Next.js", icon: <SiNextdotjs className="size-5" /> },
+      { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
+      { label: "Cloudflare", icon: <SiCloudflare className="size-5" /> },
+    ],
+    allTechnologies: [],
+    roles: [],
+    achievements: [],
+    images: [],
+    icon: <InfinityIcon className="size-4" />,
   },
 ];

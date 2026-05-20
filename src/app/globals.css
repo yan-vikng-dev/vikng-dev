@@ -184,10 +184,54 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body {
+    height: 100%;
+  }
   body {
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
+    overflow: hidden;
   }
+}
+
+/* Minimalistic site-wide SimpleBar */
+.site-scrollbar {
+  height: 100vh;
+}
+
+.site-scrollbar .simplebar-track.simplebar-vertical {
+  width: 10px;
+}
+
+.site-scrollbar .simplebar-track.simplebar-horizontal {
+  height: 10px;
+}
+
+.site-scrollbar .simplebar-scrollbar::before {
+  background-color: var(--foreground);
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.site-scrollbar .simplebar-scrollbar.simplebar-visible::before {
+  opacity: 0.18;
+}
+
+.site-scrollbar .simplebar-track:hover .simplebar-scrollbar::before,
+.site-scrollbar .simplebar-scrollbar.simplebar-hover::before {
+  opacity: 0.4;
+}
+
+.site-scrollbar .simplebar-track.simplebar-vertical .simplebar-scrollbar::before {
+  left: 3px;
+  right: 3px;
+}
+
+.site-scrollbar .simplebar-track.simplebar-horizontal .simplebar-scrollbar::before {
+  top: 3px;
+  bottom: 3px;
 }
 
 @keyframes typing-erase {

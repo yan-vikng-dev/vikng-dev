@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeRippleProvider } from "@/components/theme-ripple-provider";
+import { SiteScrollbar } from "@/components/site-scrollbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ThemeRippleProvider>
-            {children}
+            <SiteScrollbar>{children}</SiteScrollbar>
           </ThemeRippleProvider>
         </ThemeProvider>
       </body>

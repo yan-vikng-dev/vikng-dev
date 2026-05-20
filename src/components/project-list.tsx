@@ -3,11 +3,106 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, InfinityIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { TechnologyMarquee } from "@/components/technology-marquee";
 import { useInView } from "@/hooks/use-in-view";
 import { projects, type Project } from "@/data/projects";
+
+const MAX_MIRROR_DEPTH = 4;
+
+// The vikng.dev card embeds the live home page, which embeds itself again, and
+// so on. Each level renders the page at the real viewport size then scales it
+// into the small card frame, and mirrors the parent's scroll position — a
+// "camera pointed at its own monitor" feedback loop. MAX_MIRROR_DEPTH is the
+// hard stop; without it this is an infinite render loop.
+// The page scrolls inside a SimpleBar wrapper rather than the window, so the
+// recursion mirror has to read/write its position on that element instead of
+// window.scrollX/Y. The wrapper is tagged with data-site-scroll-root.
+function getScrollRoot(doc: Document): HTMLElement | null {
+  return doc.querySelector<HTMLElement>("[data-site-scroll-root]");
+}
+
+function MirrorPreview({ depth }: { depth: number }) {
+  const wrapRef = React.useRef<HTMLDivElement>(null);
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+  const [scale, setScale] = React.useState(0);
+
+  React.useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const measure = () => {
+      const vw = window.innerWidth;
+      if (vw > 0) setScale(wrap.clientWidth / vw);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  React.useEffect(() => {
+    const localRoot = getScrollRoot(document);
+    if (!localRoot) return;
+
+    let frame = 0;
+    const sync = () => {
+      frame = 0;
+      const iframeDoc = iframeRef.current?.contentDocument;
+      const remoteRoot = iframeDoc ? getScrollRoot(iframeDoc) : null;
+      if (!remoteRoot) return;
+      remoteRoot.scrollTo(localRoot.scrollLeft, localRoot.scrollTop);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(sync);
+    };
+    localRoot.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      localRoot.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  // After the iframe loads, the inner SimpleBar mounts asynchronously (its
+  // useEffect runs after the document is parsed), so the scroll root may not
+  // exist on the first tick. Retry for a handful of frames until it appears.
+  const syncInitialScroll = React.useCallback(() => {
+    const localRoot = getScrollRoot(document);
+    if (!localRoot) return;
+    let attempts = 0;
+    const tryOnce = () => {
+      const iframeDoc = iframeRef.current?.contentDocument;
+      const remoteRoot = iframeDoc ? getScrollRoot(iframeDoc) : null;
+      if (remoteRoot) {
+        remoteRoot.scrollTo(localRoot.scrollLeft, localRoot.scrollTop);
+        return;
+      }
+      if (attempts++ < 30) requestAnimationFrame(tryOnce);
+    };
+    tryOnce();
+  }, []);
+
+  return (
+    <div ref={wrapRef} className="absolute inset-0 overflow-hidden">
+      {scale > 0 ? (
+        <iframe
+          ref={iframeRef}
+          src={`/?d=${depth + 1}`}
+          title="Live recursive preview of vikng.dev"
+          tabIndex={-1}
+          aria-hidden
+          onLoad={syncInitialScroll}
+          style={{
+            width: "100vw",
+            height: "calc(100vw * 132 / 203)",
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+          }}
+          className="pointer-events-none absolute left-0 top-0 border-0"
+        />
+      ) : null}
+    </div>
+  );
+}
 
 type ProjectItemProps = {
   project: Project;
@@ -15,9 +110,10 @@ type ProjectItemProps = {
   expanded: boolean;
   onToggle: () => void;
   index: number;
+  depth: number;
 };
 
-function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectItemProps) {
+function ProjectItem({ project, priority, expanded, onToggle, index, depth }: ProjectItemProps) {
   const { ref, inView } = useInView<HTMLLIElement>({ threshold: 0.25 });
   const [toggleLabel, setToggleLabel] = React.useState("more");
   const [togglePhase, setTogglePhase] = React.useState<"idle" | "erasing" | "typing">("idle");
@@ -40,17 +136,21 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
     project.allTechnologies.length > 0 ||
     project.roles.length > 0 ||
     project.achievements.length > 0;
-  const imageClassName =
-    project.imageFit === "contain"
-      ? "object-contain p-3 drop-shadow-[0_6px_10px_rgba(2,6,23,0.8)] transition-opacity duration-300"
-      : "object-cover transition-opacity duration-300";
+  const isIconTile = project.imageFit === "contain";
+  const imageClassName = isIconTile
+    ? "object-contain drop-shadow-[0_10px_22px_rgba(2,6,23,0.18)] dark:drop-shadow-[0_10px_22px_rgba(0,0,0,0.55)] transition-opacity duration-300"
+    : "object-cover transition-opacity duration-300";
   const imageFrameClassName =
     project.imageFrameStyle === "glass"
-      ? "project-image-frame project-image-frame-glass"
-      : "project-image-frame bg-muted";
+      ? "project-image-frame project-image-frame-glass border rounded-sm"
+      : isIconTile
+      ? ""
+      : "project-image-frame bg-muted border rounded-sm";
   const imageShellClassName =
     project.imageFrameStyle === "glass"
       ? "project-image-shell project-image-shell-glass"
+      : isIconTile
+      ? ""
       : "project-image-shell";
   const staggerDelay = `${index * 80}ms`;
 
@@ -109,8 +209,24 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
         onPointerMove={handleImagePointerMove}
         onPointerLeave={handleImagePointerLeave}
       >
-        <div className={`relative aspect-[203/132] w-full overflow-hidden rounded-sm border ${imageFrameClassName}`}>
-          {anyImage ? (
+        <div className={`relative aspect-[203/132] w-full overflow-hidden ${isIconTile ? "p-6 sm:p-8" : ""} ${imageFrameClassName}`}>
+          {project.selfPreview ? (
+            depth >= MAX_MIRROR_DEPTH ? (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 text-muted-foreground">
+                <InfinityIcon className="size-6" />
+                <span className="text-xs font-medium">vikng.dev</span>
+              </div>
+            ) : depth >= 1 || inView ? (
+              // depth 0 (top page) waits until scrolled near; embedded levels
+              // mount immediately — their IntersectionObserver can't fire,
+              // since ancestor iframe clipping keeps them under-threshold.
+              <MirrorPreview depth={depth} />
+            ) : (
+              <div className="absolute inset-0 grid place-items-center">
+                <InfinityIcon className="size-6 text-muted-foreground/40" />
+              </div>
+            )
+          ) : anyImage ? (
             <Image
               src={anyImage.src}
               alt={anyImage.alt}
@@ -256,7 +372,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index }: ProjectIt
   );
 }
 
-export function ProjectList() {
+export function ProjectList({ depth = 0 }: { depth?: number }) {
   const [openProject, setOpenProject] = React.useState<string | null>(null);
 
   return (
@@ -269,6 +385,7 @@ export function ProjectList() {
           expanded={openProject === p.title}
           onToggle={() => setOpenProject((current) => (current === p.title ? null : p.title))}
           index={i}
+          depth={depth}
         />)
       )}
     </ul>
