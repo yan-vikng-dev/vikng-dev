@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Download } from "lucide-react";
-import { SiGithub } from "react-icons/si";
+import { ArrowLeft } from "lucide-react";
+import { AutoQuitDownloadCTA } from "@/components/autoquit-download-cta";
 import { BlueprintBackground } from "@/components/blueprint-background";
-import { CopyCommandButton } from "@/components/copy-command-button";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-export const dynamic = "force-dynamic";
 
 const REPO_OWNER = "yan-vikng-dev";
 const REPO_NAME = "AutoQuit";
@@ -15,7 +12,11 @@ const REPO = `https://github.com/${REPO_OWNER}/${REPO_NAME}`;
 const LATEST_RELEASE = `${REPO}/releases/latest`;
 const BREW_COMMAND = "brew install --cask yan-vikng-dev/tap/autoquit";
 
-const FALLBACK_VERSION = "1.0.0";
+// Floor values, baked into the HTML at build time. The client component
+// refreshes these on hydration via a browser-side fetch to the GitHub API,
+// so this only needs to be "some valid release" — bump it occasionally if
+// build-time fetches are failing and the gap from latest gets too wide.
+const FALLBACK_VERSION = "1.0.2";
 const FALLBACK_DMG_URL = `${REPO}/releases/download/v${FALLBACK_VERSION}/AutoQuit-v${FALLBACK_VERSION}.dmg`;
 
 type ReleaseInfo = { version: string; dmgUrl: string };
@@ -34,24 +35,16 @@ async function getLatestRelease(): Promise<ReleaseInfo> {
           Accept: "application/vnd.github+json",
           "User-Agent": "vikng.dev",
         },
-        cache: "no-store",
       },
     );
-    if (!res.ok) {
-      const body = await res.text().catch(() => "<no body>");
-      const rateLimitRemaining = res.headers.get("x-ratelimit-remaining");
-      const rateLimitReset = res.headers.get("x-ratelimit-reset");
-      throw new Error(
-        `GitHub API returned ${res.status} (remaining=${rateLimitRemaining}, reset=${rateLimitReset}): ${body.slice(0, 300)}`,
-      );
-    }
+    if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
     const data = (await res.json()) as GithubRelease;
     const version = data.tag_name?.replace(/^v/, "");
     const dmgUrl = data.assets?.find((a) => a.name?.endsWith(".dmg"))?.browser_download_url;
     if (!version || !dmgUrl) throw new Error("Latest release is missing tag or DMG asset");
     return { version, dmgUrl };
   } catch (err) {
-    console.warn("[autoquit] Falling back to hardcoded release info:", err);
+    console.warn("[autoquit] SSR fetch failed, client will refresh on hydration:", err);
     return { version: FALLBACK_VERSION, dmgUrl: FALLBACK_DMG_URL };
   }
 }
@@ -123,36 +116,36 @@ export default async function AutoQuitPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href={dmgUrl}
-                className="inline-flex items-center gap-2 rounded-md bg-foreground px-5 h-11 text-background font-medium hover:bg-foreground/90 transition-colors"
-              >
-                <Download className="size-4" aria-hidden="true" />
-                <span>Download for macOS</span>
-              </a>
-              <a
-                href={LATEST_RELEASE}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-md border bg-background px-5 h-11 text-foreground hover:bg-muted transition-colors"
-              >
-                <SiGithub className="size-4" aria-hidden="true" />
-                <span>View on GitHub</span>
-              </a>
-            </div>
+            <AutoQuitDownloadCTA
+              initialVersion={version}
+              initialDmgUrl={dmgUrl}
+              repoOwner={REPO_OWNER}
+              repoName={REPO_NAME}
+              latestReleaseUrl={LATEST_RELEASE}
+              brewCommand={BREW_COMMAND}
+            />
+          </div>
+        </section>
 
-            <div className="flex flex-col gap-2 text-xs text-muted-foreground">
-              <p className="tabular-nums">
-                v{version} · macOS 13+ · Universal
-              </p>
-              <div className="flex items-center gap-1.5 font-mono">
-                <span aria-hidden="true" className="text-muted-foreground/60">$</span>
-                <code className="select-all text-foreground/80">{BREW_COMMAND}</code>
-                <CopyCommandButton command={BREW_COMMAND} variant="inline" />
-              </div>
+        {/* Demo */}
+        <section className="grid grid-cols-1 gap-8 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12">
+          <div className="project-image-shell project-image-shell-glass">
+            <div className="project-image-frame project-image-frame-glass relative aspect-[63/29] w-full overflow-hidden rounded-lg border sm:w-[36rem]">
+              <video
+                src="/autoquit/demo.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                aria-label="Before and after demo of AutoQuit closing an app when its last window closes"
+                className="absolute inset-0 size-full object-cover"
+              />
             </div>
           </div>
+          <h2 className="text-2xl font-semibold tracking-tight">
+            Ever wanted to close an app and have it, well… close?
+          </h2>
         </section>
 
         {/* A fix, not an app */}
