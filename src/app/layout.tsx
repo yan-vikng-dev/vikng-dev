@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vikng.dev"),
   title: "Yan Gurevich, Full‑Stack Engineer",
   description: "True full‑stack engineer. I ship end‑to‑end: idea → deployment → scale.",
 };
