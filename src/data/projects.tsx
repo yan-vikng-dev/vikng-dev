@@ -69,7 +69,7 @@ export type Project = {
   href: string | null;
   opensourceHref?: string;
   description: string;
-  status: "in production" | "in development";
+  status: "in production" | "in development" | "sunset";
   imageFit?: "cover" | "contain";
   imageFrameStyle?: "default" | "glass";
   selfPreview?: boolean;
@@ -213,7 +213,7 @@ export const projects: Project[] = [
     title: "Grix Finance",
     href: "https://grix.finance",
     description: "Web3 Options Aggregator",
-    status: "in production",
+    status: "sunset",
     techHighlights: [
       { label: "React", icon: <SiReact className="size-5" /> },
       { label: "AWS", icon: <SiAmazon className="size-5" /> },

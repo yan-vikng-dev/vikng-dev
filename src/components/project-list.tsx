@@ -3,13 +3,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import { ChevronDown, InfinityIcon } from "lucide-react";
+import { ChevronDown, Hammer, InfinityIcon, Ship } from "lucide-react";
+import { SiGithub } from "react-icons/si";
 import { Badge } from "@/components/ui/badge";
+import { SunsetIcon } from "@/components/icons/sunset-icon";
 import { TechnologyMarquee } from "@/components/technology-marquee";
 import { useInView } from "@/hooks/use-in-view";
 import { projects, type Project } from "@/data/projects";
 
 const MAX_MIRROR_DEPTH = 4;
+
+const STATUS_BADGES: Record<
+  Project["status"],
+  {
+    label: string;
+    className: string;
+    Icon: React.ComponentType<{ className?: string }>;
+  }
+> = {
+  "in production": {
+    label: "in production",
+    className: "gap-1 bg-green-500/15 text-green-600 border-green-500/30",
+    Icon: Ship,
+  },
+  "in development": {
+    label: "in development",
+    className: "gap-1 bg-amber-500/15 text-amber-700 border-amber-500/30",
+    Icon: Hammer,
+  },
+  sunset: {
+    label: "sunset",
+    className: "gap-1 bg-orange-500/15 text-orange-600 border-orange-500/30 dark:text-orange-400",
+    Icon: SunsetIcon,
+  },
+};
 
 // The vikng.dev card embeds the live home page, which embeds itself again, and
 // so on. Each level renders the page at the real viewport size then scales it
@@ -114,6 +141,8 @@ type ProjectItemProps = {
 };
 
 function ProjectItem({ project, priority, expanded, onToggle, index, depth }: ProjectItemProps) {
+  const statusBadge = STATUS_BADGES[project.status];
+  const StatusIcon = statusBadge.Icon;
   const { ref, inView } = useInView<HTMLLIElement>({ threshold: 0.25 });
   const [toggleLabel, setToggleLabel] = React.useState("more");
   const [togglePhase, setTogglePhase] = React.useState<"idle" | "erasing" | "typing">("idle");
@@ -138,7 +167,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index, depth }: Pr
     project.achievements.length > 0;
   const isIconTile = project.imageFit === "contain";
   const imageClassName = isIconTile
-    ? "object-contain drop-shadow-[0_10px_22px_rgba(2,6,23,0.18)] dark:drop-shadow-[0_10px_22px_rgba(0,0,0,0.55)] transition-opacity duration-300"
+    ? "object-contain transition-opacity duration-300"
     : "object-cover transition-opacity duration-300";
   const imageFrameClassName =
     project.imageFrameStyle === "glass"
@@ -279,18 +308,14 @@ function ProjectItem({ project, priority, expanded, onToggle, index, depth }: Pr
           )}
         </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Badge
-              className={
-                project.status === "in production"
-                  ? "bg-green-500/15 text-green-600 border-green-500/30"
-                  : "bg-amber-500/15 text-amber-700 border-amber-500/30"
-              }
-            >
-              {project.status}
+            <Badge className={statusBadge.className}>
+              <StatusIcon className="size-3 shrink-0" aria-hidden="true" />
+              {statusBadge.label}
             </Badge>
             {project.opensourceHref ? (
               <Link href={project.opensourceHref} target="_blank" rel="noreferrer">
-                <Badge className="bg-blue-500/15 text-blue-500 border-blue-500/35 hover:bg-blue-500/25 transition-colors cursor-pointer">
+                <Badge className="gap-1 bg-blue-500/15 text-blue-500 border-blue-500/35 hover:bg-blue-500/25 transition-colors cursor-pointer">
+                  <SiGithub className="size-3 shrink-0" aria-hidden="true" />
                   open source
                 </Badge>
               </Link>
