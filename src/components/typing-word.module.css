@@ -1,0 +1,36 @@
+@keyframes typing-erase {
+  from {
+    max-width: calc(var(--typing-chars) * 1ch);
+  }
+  to {
+    max-width: 0;
+  }
+}
+
+@keyframes typing-type {
+  from {
+    max-width: 0;
+  }
+  to {
+    max-width: calc(var(--typing-chars) * 1ch);
+  }
+}
+
+.word {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+}
+
+.erasing {
+  animation: typing-erase var(--typing-erase-ms, 200ms) steps(var(--typing-chars), end) forwards;
+}
+
+.typing {
+  animation: typing-type var(--typing-type-ms, 240ms) steps(var(--typing-chars), end) forwards;
+}
+
+.idle {
+  max-width: calc(var(--typing-chars) * 1ch);
+}

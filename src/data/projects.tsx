@@ -29,7 +29,7 @@ import { TanstackIcon } from "@/components/icons/tanstack-icon";
 import { XcodeIcon } from "@/components/icons/xcode-icon";
 import { CloudflareWorkersIcon } from "@/components/icons/cloudflare-workers-icon";
 
-type ProjectImage = {
+export type ProjectImage = {
   src: string;
   alt: string;
   theme: "light" | "dark" | "any";
@@ -66,18 +66,17 @@ const MonoSvgIcon = ({ src, label }: MonoSvgIconProps) => (
 
 export type Project = {
   title: string;
-  href: string | null;
+  href: string;
   opensourceHref?: string;
   description: string;
   status: "in production" | "in development" | "sunset";
   imageFit?: "cover" | "contain";
-  imageFrameStyle?: "default" | "glass";
   selfPreview?: boolean;
   techHighlights: TechItem[];
   allTechnologies: TechItem[];
   roles: string[];
   achievements: string[];
-  images: ProjectImage[];
+  images?: ProjectImage[];
   icon: ReactNode;
 };
 
@@ -110,13 +109,7 @@ export const projects: Project[] = [
       "Developed web app from start to finish",
       "Integrated web app with existing security tools",
     ],
-    images: [
-      { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
-      { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
-      { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
-      { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
-      { src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" },
-    ],
+    images: [{ src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" }],
     icon: <Shield className="size-4" />,
   },
   {
@@ -150,10 +143,6 @@ export const projects: Project[] = [
     ],
     images: [
       { src: "/projects/flowcost-light.png", alt: "Flowcost light theme interface", theme: "light" },
-      { src: "/projects/flowcost-light.png", alt: "Flowcost light theme interface", theme: "light" },
-      { src: "/projects/flowcost-light.png", alt: "Flowcost light theme interface", theme: "light" },
-      { src: "/projects/flowcost-dark.png", alt: "Flowcost dark theme interface", theme: "dark" },
-      { src: "/projects/flowcost-dark.png", alt: "Flowcost dark theme interface", theme: "dark" },
       { src: "/projects/flowcost-dark.png", alt: "Flowcost dark theme interface", theme: "dark" },
     ],
     icon: <Wallet className="size-4" />,
@@ -201,10 +190,6 @@ export const projects: Project[] = [
     achievements: ["Realistic physics and body interactions", "Created custom, adaptive audio"],
     images: [
       { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
-      { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
-      { src: "/projects/ironfront-light.png", alt: "Ironfront light theme gameplay", theme: "light" },
-      { src: "/projects/ironfront-dark.png", alt: "Ironfront dark theme gameplay", theme: "dark" },
-      { src: "/projects/ironfront-dark.png", alt: "Ironfront dark theme gameplay", theme: "dark" },
       { src: "/projects/ironfront-dark.png", alt: "Ironfront dark theme gameplay", theme: "dark" },
     ],
     icon: <Gamepad2 className="size-4" />,
@@ -234,13 +219,7 @@ export const projects: Project[] = [
       "Reduced AWS bill by 30%",
       "Created customizable trade bots",
     ],
-    images: [
-      { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
-      { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
-      { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
-      { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
-      { src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" },
-    ],
+    images: [{ src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" }],
     icon: <Boxes className="size-4" />,
   },
   {
@@ -257,7 +236,6 @@ export const projects: Project[] = [
     allTechnologies: [],
     roles: [],
     achievements: [],
-    images: [],
     icon: <InfinityIcon className="size-4" />,
   },
 ];
