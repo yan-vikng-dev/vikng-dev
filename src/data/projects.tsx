@@ -219,7 +219,10 @@ export const projects: Project[] = [
       "Reduced AWS bill by 30%",
       "Created customizable trade bots",
     ],
-    images: [{ src: "/projects/grix.png", alt: "Grix finance trading dashboard", theme: "any" }],
+    images: [
+      { src: "/projects/grix-light.png", alt: "Grix finance trading dashboard", theme: "light" },
+      { src: "/projects/grix-dark.png", alt: "Grix finance trading dashboard", theme: "dark" },
+    ],
     icon: <Boxes className="size-4" />,
   },
   {

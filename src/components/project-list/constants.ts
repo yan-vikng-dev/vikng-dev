@@ -36,11 +36,21 @@ export const IMAGE_FRAME_VARIANTS = {
   icon: {
     shell: "",
     frame: "",
+    aspect: "aspect-[203/132]",
     padding: "p-6 sm:p-8",
   },
   default: {
     shell: "project-image-shell",
     frame: "project-image-frame bg-muted border rounded-sm",
+    aspect: "aspect-[203/132]",
+    padding: "",
+  },
+  // Desktop matches the default card look; mobile is permissive so
+  // MirrorPreview owns its own sizing and device-shell framing.
+  mirror: {
+    shell: "project-image-shell",
+    frame: "project-image-frame sm:bg-muted sm:border sm:rounded-sm",
+    aspect: "sm:aspect-[203/132]",
     padding: "",
   },
 } as const;
@@ -48,6 +58,7 @@ export const IMAGE_FRAME_VARIANTS = {
 export type ImageFrameVariant = (typeof IMAGE_FRAME_VARIANTS)[keyof typeof IMAGE_FRAME_VARIANTS];
 
 export function getFrameVariant(project: Project): ImageFrameVariant {
+  if (project.selfPreview) return IMAGE_FRAME_VARIANTS.mirror;
   if (project.imageFit === "contain") return IMAGE_FRAME_VARIANTS.icon;
   return IMAGE_FRAME_VARIANTS.default;
 }

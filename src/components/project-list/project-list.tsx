@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { TypingWord } from "@/components/typing-word";
 import { TechnologyMarquee } from "@/components/technology-marquee";
 import { useInView } from "@/hooks/use-in-view";
+import { cn } from "@/lib/utils";
 import { projects, type Project } from "@/data/projects";
 import { STATUS_BADGES, getFrameVariant } from "./constants";
 import { ProjectImageFrame } from "./project-image-frame";
@@ -52,7 +53,13 @@ function ProjectItem({ project, priority, expanded, onToggle, index, depth }: Pr
   );
 
   return (
-    <li ref={ref} className="grid grid-cols-1 gap-4 sm:grid-cols-[2fr_3fr] sm:gap-8">
+    <li
+      ref={ref}
+      className={cn(
+        "grid gap-4 sm:grid-cols-[2fr_3fr] sm:gap-8",
+        project.selfPreview ? "grid-cols-[1fr_2fr]" : "grid-cols-1",
+      )}
+    >
       <ProjectImageFrame variant={frameVariant}>
         <ProjectImagePreview
           preview={preview}

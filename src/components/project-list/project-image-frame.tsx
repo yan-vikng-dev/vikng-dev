@@ -14,7 +14,8 @@ export function ProjectImageFrame({ variant, children }: ProjectImageFrameProps)
     <div className={variant.shell}>
       <div
         className={cn(
-          "relative aspect-[203/132] w-full overflow-hidden",
+          "relative w-full overflow-hidden",
+          variant.aspect,
           variant.padding,
           variant.frame
         )}
