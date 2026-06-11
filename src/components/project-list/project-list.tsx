@@ -103,7 +103,7 @@ function ProjectItem({ project, priority, expanded, onToggle, index, depth }: Pr
           </div>
           <p className="text-sm text-foreground/80">{project.description}</p>
 
-          {techChipList(project.techHighlights)}
+          {project.techHighlights.length > 0 ? techChipList(project.techHighlights) : null}
         </div>
 
         {hasExpandedContent ? (

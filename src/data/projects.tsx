@@ -81,34 +81,39 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  // Threatlight — tech/roles/achievements kept below for later restore
+  // techHighlights: [
+  //   { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
+  //   { label: "Docker", icon: <SiDocker className="size-5" /> },
+  //   { label: "Terraform", icon: <SiTerraform className="size-5" /> },
+  // ],
+  // allTechnologies: [
+  //   { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
+  //   { label: "Docker", icon: <SiDocker className="size-5" /> },
+  //   { label: "Terraform", icon: <SiTerraform className="size-5" /> },
+  //   { label: "Next.js", icon: <SiNextdotjs className="size-5" /> },
+  //   { label: "Compute Engine", icon: <MonoSvgIcon src="/external_logos/gcp-compute-engine.svg" label="Compute Engine" /> },
+  //   { label: "Monitoring", icon: <MonoSvgIcon src="/external_logos/gcp-monitoring.svg" label="Monitoring" /> },
+  //   { label: "DNS", icon: <SiCloudflare className="size-5" /> },
+  //   { label: "CI/CD", icon: <SiGithubactions className="size-5" /> },
+  //   { label: "Python", icon: <SiPython className="size-5" /> },
+  //   { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
+  // ],
+  // roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
+  // achievements: [
+  //   "Automated L1 Triage with AI ",
+  //   "Developed web app from start to finish",
+  //   "Integrated web app with existing security tools",
+  // ],
   {
     title: "Threatlight",
     href: "https://threatlight.com",
     description: "Targeted Detection and Response",
     status: "in production",
-    techHighlights: [
-      { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
-      { label: "Docker", icon: <SiDocker className="size-5" /> },
-      { label: "Terraform", icon: <SiTerraform className="size-5" /> },
-    ],
-    allTechnologies: [
-      { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
-      { label: "Docker", icon: <SiDocker className="size-5" /> },
-      { label: "Terraform", icon: <SiTerraform className="size-5" /> },
-      { label: "Next.js", icon: <SiNextdotjs className="size-5" /> },
-      { label: "Compute Engine", icon: <MonoSvgIcon src="/external_logos/gcp-compute-engine.svg" label="Compute Engine" /> },
-      { label: "Monitoring", icon: <MonoSvgIcon src="/external_logos/gcp-monitoring.svg" label="Monitoring" /> },
-      { label: "DNS", icon: <SiCloudflare className="size-5" /> },
-      { label: "CI/CD", icon: <SiGithubactions className="size-5" /> },
-      { label: "Python", icon: <SiPython className="size-5" /> },
-      { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
-    ],
-    roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
-    achievements: [
-      "Automated L1 Triage with AI ",
-      "Developed web app from start to finish",
-      "Integrated web app with existing security tools",
-    ],
+    techHighlights: [],
+    allTechnologies: [],
+    roles: [],
+    achievements: [],
     images: [{ src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" }],
     icon: <Shield className="size-4" />,
   },
