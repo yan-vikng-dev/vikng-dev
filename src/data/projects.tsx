@@ -1,5 +1,19 @@
 import type { ReactNode } from "react";
-import { Shield, Gamepad2, Wallet, Boxes, InfinityIcon } from "lucide-react";
+import {
+  Shield,
+  Gamepad2,
+  Wallet,
+  Boxes,
+  InfinityIcon,
+  Cloud,
+  Box,
+  GitBranch,
+  Server,
+  Activity,
+  Globe,
+  Code2,
+  Terminal,
+} from "lucide-react";
 import {
   SiReact,
   SiAmazon,
@@ -81,39 +95,38 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-  // Threatlight — tech/roles/achievements kept below for later restore
-  // techHighlights: [
-  //   { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
-  //   { label: "Docker", icon: <SiDocker className="size-5" /> },
-  //   { label: "Terraform", icon: <SiTerraform className="size-5" /> },
-  // ],
-  // allTechnologies: [
-  //   { label: "GCP", icon: <SiGooglecloud className="size-5" /> },
-  //   { label: "Docker", icon: <SiDocker className="size-5" /> },
-  //   { label: "Terraform", icon: <SiTerraform className="size-5" /> },
-  //   { label: "Next.js", icon: <SiNextdotjs className="size-5" /> },
-  //   { label: "Compute Engine", icon: <MonoSvgIcon src="/external_logos/gcp-compute-engine.svg" label="Compute Engine" /> },
-  //   { label: "Monitoring", icon: <MonoSvgIcon src="/external_logos/gcp-monitoring.svg" label="Monitoring" /> },
-  //   { label: "DNS", icon: <SiCloudflare className="size-5" /> },
-  //   { label: "CI/CD", icon: <SiGithubactions className="size-5" /> },
-  //   { label: "Python", icon: <SiPython className="size-5" /> },
-  //   { label: "TypeScript", icon: <SiTypescript className="size-5" /> },
-  // ],
-  // roles: ["Infrastructure as code", "Deployment automation", "Web-based application", "Landing page"],
-  // achievements: [
-  //   "Automated L1 Triage with AI ",
-  //   "Developed web app from start to finish",
-  //   "Integrated web app with existing security tools",
-  // ],
   {
     title: "Threatlight",
     href: "https://threatlight.com",
     description: "Targeted Detection and Response",
     status: "in production",
-    techHighlights: [],
-    allTechnologies: [],
-    roles: [],
-    achievements: [],
+    techHighlights: [
+      { label: "Cloud Infrastructure", icon: <Cloud className="size-5" /> },
+      { label: "Containers", icon: <Box className="size-5" /> },
+      { label: "CI/CD", icon: <GitBranch className="size-5" /> },
+    ],
+    allTechnologies: [
+      { label: "Cloud Infrastructure", icon: <Cloud className="size-5" /> },
+      { label: "Containers", icon: <Box className="size-5" /> },
+      { label: "CI/CD", icon: <GitBranch className="size-5" /> },
+      { label: "Virtual Machines", icon: <Server className="size-5" /> },
+      { label: "Monitoring & observability", icon: <Activity className="size-5" /> },
+      { label: "Networking", icon: <Globe className="size-5" /> },
+      { label: "Web application", icon: <Code2 className="size-5" /> },
+      { label: "Backend services", icon: <Terminal className="size-5" /> },
+    ],
+    roles: [
+      "Full-stack product development",
+      "Cloud platform engineering",
+      "DevOps & release automation",
+      "Production operations & observability",
+    ],
+    achievements: [
+      "Shipped production application end-to-end",
+      "Built and maintained infrastructure as code",
+      "Automated operational workflows to reduce manual overhead",
+      "Established deployment and monitoring pipelines",
+    ],
     images: [{ src: "/projects/threatlight.png", alt: "Threatlight product interface", theme: "any" }],
     icon: <Shield className="size-4" />,
   },
